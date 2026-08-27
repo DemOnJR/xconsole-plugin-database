@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { DatabaseTree, type DbInstance } from "./DatabaseTree";
 import { DatabaseIcon } from "./icons";
 
-export function DatabaseNode({ id, data }: { id?: string; data?: any }) {
+export function DatabaseNode() {
   const [instances, setInstances] = useState<DbInstance[]>([]);
   const [selectedTable, setSelectedTable] = useState<string | null>(null);
 
@@ -18,9 +18,7 @@ export function DatabaseNode({ id, data }: { id?: string; data?: any }) {
       <div className="flex flex-1 min-h-0 overflow-hidden">
         <DatabaseTree
           instances={instances}
-          vpsId={data?.vpsId || "default"}
           scanning={false}
-          selected={null}
           onPatch={(epId, patch) => {
             setInstances((cur) =>
               cur.map((i) => (i.endpoint.id === epId ? { ...i, ...patch } : i))

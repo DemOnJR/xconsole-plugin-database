@@ -1,14 +1,9 @@
-import React, { useMemo, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import {
   DatabaseIcon,
   RefreshIcon,
-  SearchIcon,
-  CloseIcon,
-  TrashIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-  LayersIcon,
 } from "./icons";
 
 export interface DbEndpoint {
@@ -23,15 +18,6 @@ export interface DbEndpoint {
   image?: string | null;
 }
 
-export interface DbSavedConnection {
-  id: string;
-  username: string;
-  host?: string;
-  port?: number;
-  container?: string | null;
-  has_secret: boolean;
-}
-
 export interface DbTable {
   name: string;
   rows: number;
@@ -42,7 +28,6 @@ export interface DbTable {
 
 export interface DbInstance {
   endpoint: DbEndpoint;
-  saved?: DbSavedConnection;
   sessionId: string | null;
   version: string;
   schemas: string[];
@@ -53,62 +38,19 @@ export interface DbInstance {
   error: string | null;
 }
 
-export const DB_PRODUCT_LABEL: Record<string, string> = {
-  mysql: "MySQL",
-  mariadb: "MariaDB",
-  postgres: "PostgreSQL",
-  redis: "Redis",
-  sqlite: "SQLite",
-};
-
-export function newInstance(endpoint: DbEndpoint): DbInstance {
-  return {
-    endpoint,
-    sessionId: null,
-    version: "",
-    schemas: [],
-    tables: {},
-    expanded: false,
-    openSchemas: [],
-    busy: false,
-    error: null,
-  };
-}
-
-function bytes(n: number): string {
-  if (n < 1024) return `${n} B`;
-  const units = ["KB", "MB", "GB", "TB"];
-  let v = n / 1024;
-  let i = 0;
-  while (v >= 1024 && i < units.length - 1) {
-    v /= 1024;
-    i += 1;
-  }
-  return `${v < 10 ? v.toFixed(1) : Math.round(v)} ${units[i]}`;
-}
-
 export function DatabaseTree({
   instances,
-  vpsId,
   scanning,
-  selected,
   onPatch,
   onSelectTable,
   onRescan,
-  onDisconnect,
 }: {
   instances: DbInstance[];
-  vpsId: string;
   scanning: boolean;
-  selected: { endpointId: string; schema: string; table: string } | null;
   onPatch: (endpointId: string, patch: Partial<DbInstance>) => void;
   onSelectTable: (instance: DbInstance, schema: string, table: string) => void;
   onRescan: () => void;
-  onDisconnect?: (instance: DbInstance) => void;
 }) {
-  const [filter, setFilter] = useState("");
-  const filterQ = filter.trim().toLowerCase();
-
   const toggleInstance = (inst: DbInstance) =>
     onPatch(inst.endpoint.id, { expanded: !inst.expanded });
 
