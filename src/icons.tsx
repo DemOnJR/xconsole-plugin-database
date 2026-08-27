@@ -700,3 +700,82 @@ export function PauseIcon(props: IconProps) {
   );
 }
 
+export function TargetIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="2" />
+    </svg>
+  );
+}
+
+export function SequentialDots({
+  size = 18,
+  className = "text-cyan-400",
+}: {
+  size?: number;
+  className?: string;
+}) {
+  return (
+    <svg
+      width={size}
+      height={Math.round(size * 0.4)}
+      viewBox="0 0 24 10"
+      fill="currentColor"
+      className={`inline-block align-middle ${className}`}
+    >
+      <circle cx="4" cy="5" r="2.8">
+        <animate attributeName="opacity" values="0.25;1;0.25" dur="1.1s" repeatCount="indefinite" begin="0s" />
+        <animate attributeName="r" values="2.2;3.2;2.2" dur="1.1s" repeatCount="indefinite" begin="0s" />
+      </circle>
+      <circle cx="12" cy="5" r="2.8">
+        <animate attributeName="opacity" values="0.25;1;0.25" dur="1.1s" repeatCount="indefinite" begin="0.22s" />
+        <animate attributeName="r" values="2.2;3.2;2.2" dur="1.1s" repeatCount="indefinite" begin="0.22s" />
+      </circle>
+      <circle cx="20" cy="5" r="2.8">
+        <animate attributeName="opacity" values="0.25;1;0.25" dur="1.1s" repeatCount="indefinite" begin="0.44s" />
+        <animate attributeName="r" values="2.2;3.2;2.2" dur="1.1s" repeatCount="indefinite" begin="0.44s" />
+      </circle>
+    </svg>
+  );
+}
+
+export function CloudIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+    </svg>
+  );
+}
+
+export function GlobeIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <circle cx="12" cy="12" r="10" />
+      <line x1="2" y1="12" x2="22" y2="12" />
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+    </svg>
+  );
+}
+
+export function HistoryIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+      <path d="M3 3v5h5" />
+      <polyline points="12 7 12 12 15 15" />
+    </svg>
+  );
+}
+
+export function ChartIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <line x1="18" y1="20" x2="18" y2="10" />
+      <line x1="12" y1="20" x2="12" y2="4" />
+      <line x1="6" y1="20" x2="6" y2="14" />
+    </svg>
+  );
+}
+
